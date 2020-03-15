@@ -4,7 +4,7 @@
     <node pkg="abot_bringup" type="abot_bringup" name="abot_bringup" output="screen" />
 
     <!-- 加载机器人模型参数 -->
-    <arg name="urdf_file" default="$(find xacro)/xacro --inorder '$(find abot_description)/urdf/abot_with_rplidar.urdf.xacro'" />
+    <arg name="urdf_file" default="$(find xacro)/xacro '$(find abot_description)/urdf/abot_with_rplidar.urdf.xacro'" />
     <param name="robot_description" command="$(arg urdf_file)" />
 
     <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />  

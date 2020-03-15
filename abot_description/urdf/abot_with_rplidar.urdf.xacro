@@ -9,7 +9,7 @@
 	<xacro:property name="rplidar_offset_z" value="0.028" />
 
 	<!-- abot机器人平台-->
-	<abot_body/>
+	<xacro:abot_body/>
 
 	<!-- rplidar -->
 	<joint name="rplidar_joint" type="fixed">
