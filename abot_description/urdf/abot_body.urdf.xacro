@@ -4,8 +4,8 @@
     <xacro:property name="M_PI" value="3.14159"/>
     <xacro:property name="wheel_radius" value="0.033"/>
     <xacro:property name="wheel_length" value="0.017"/>
-    <xacro:property name="base_link_radius" value="0.13"/>
-    <xacro:property name="base_link_length" value="0.005"/>
+    <xacro:property name="base_link_radius" value="0.1025"/>
+    <xacro:property name="base_link_length" value="0.003"/>
     <xacro:property name="motor_radius" value="0.02"/>
     <xacro:property name="motor_length" value="0.08"/>
     <xacro:property name="motor_x" value="-0.055"/>
