@@ -6,7 +6,7 @@
 - rplidar A2
 - NUCLEO F303ZE
 - raspberry pi 3B+ 
-![] (https://img.alicdn.com/imgextra/i3/723377223/O1CN01MMJ1tv23EBLUCIBpj_!!723377223.jpg)
+![chassis](https://img.alicdn.com/imgextra/i3/723377223/O1CN01MMJ1tv23EBLUCIBpj_!!723377223.jpg)
 
 ## system
 - ubuntu mate 18.04 (raspberry pi) + ros melodic
