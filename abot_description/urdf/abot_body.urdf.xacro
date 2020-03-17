@@ -2,17 +2,17 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
     <xacro:property name="M_PI" value="3.14159"/>
-    <xacro:property name="wheel_radius" value="0.033"/>
-    <xacro:property name="wheel_length" value="0.017"/>
+    <xacro:property name="wheel_radius" value="0.0325"/>
+    <xacro:property name="wheel_length" value="0.027"/>
     <xacro:property name="base_link_radius" value="0.1025"/>
     <xacro:property name="base_link_length" value="0.003"/>
     <xacro:property name="motor_radius" value="0.02"/>
-    <xacro:property name="motor_length" value="0.08"/>
-    <xacro:property name="motor_x" value="-0.055"/>
-    <xacro:property name="motor_y" value="0.075"/>
-    <xacro:property name="plate_height" value="0.07"/>
-    <xacro:property name="standoff_x" value="0.12"/>
-    <xacro:property name="standoff_y" value="0.10"/>
+    <xacro:property name="motor_length" value="0.06"/>
+    <xacro:property name="motor_x" value="-0.0385"/>
+    <xacro:property name="motor_y" value="0.034"/>
+    <xacro:property name="plate_height" value="0.043"/>
+    <xacro:property name="standoff_x" value="0.08"/>
+    <xacro:property name="standoff_y" value="0.06"/>
 
     <!-- 定义abot本体的宏 -->
     <xacro:macro name="abot_standoff_2in" params="parent number x_loc y_loc z_loc">
@@ -34,7 +34,7 @@
             <visual>
                 <origin xyz=" 0 0 0 " rpy="0 0 0" />
                 <geometry>
-                    <box size="0.01 0.01 0.07" />
+                    <box size="0.01 0.01 ${plate_height}" />
                 </geometry>
                 <material name="black">
                     <color rgba="0.16 0.17 0.15 0.9"/>
@@ -98,7 +98,7 @@
         </link>
 
         <joint name="base_footprint_joint" type="fixed">
-            <origin xyz="0 0 ${wheel_radius}" rpy="0 0 0" />        
+            <origin xyz="0 0 ${wheel_radius*2}" rpy="0 0 0" />        
             <parent link="base_footprint"/>
             <child link="base_link" />
         </joint>
@@ -128,7 +128,7 @@
         </link>
 
         <joint name="base_left_motor_joint" type="fixed">
-            <origin xyz="${motor_x} ${motor_y} 0" rpy="0 0 0" />        
+            <origin xyz="${motor_x} ${motor_y} -${wheel_radius}" rpy="0 0 0" />        
             <parent link="base_link"/>
             <child link="left_motor" />
         </joint>
@@ -192,7 +192,7 @@
         </link>
 
         <joint name="base_right_motor_joint" type="fixed">
-            <origin xyz="${motor_x} -${motor_y} 0" rpy="0 0 0" />        
+            <origin xyz="${motor_x} -${motor_y} -${wheel_radius}" rpy="0 0 0" />        
             <parent link="base_link"/>
             <child link="right_motor" />
         </joint>
@@ -241,7 +241,7 @@
             <visual>
                 <origin xyz="0 0 0" rpy="${M_PI/2} 0 0"/>
                 <geometry>
-                    <sphere radius="${wheel_radius/2}" />
+                    <sphere radius="${wheel_radius}" />
                 </geometry>
                 <material name="black" />
             </visual>
@@ -249,13 +249,13 @@
             <collision>
                 <origin xyz="0 0 0.01" rpy="${M_PI/2} 0 0" />
                 <geometry>
-                    <sphere radius="${wheel_radius/2}" />
+                    <sphere radius="${wheel_radius}" />
                 </geometry>
             </collision>
         </link>
 
         <joint name="front_caster_joint" type="fixed">
-            <origin xyz="${base_link_radius-wheel_radius/2} 0 -${wheel_radius/2}" rpy="0 0 0"/>
+            <origin xyz="${base_link_radius-wheel_radius} 0 -${wheel_radius}" rpy="0 0 0"/>
             <parent link="base_link"/>
             <child link="front_caster_link"/>
         </joint>
@@ -285,42 +285,6 @@
                     <cylinder length="${base_link_length}" radius="${base_link_radius}"/>
                 </geometry>
                 <material name="yellow"/>
-            </visual>
-
-            <collision>
-                <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
-                <geometry>
-                    <cylinder length="${base_link_length}" radius="${base_link_radius}"/>
-                </geometry>
-            </collision>
-        </link>
-
-
-        <xacro:abot_standoff_2in parent="standoff_2in_1_link" number="5" x_loc="0" y_loc="0" z_loc="${plate_height}"/>
-        <xacro:abot_standoff_2in parent="standoff_2in_2_link" number="6" x_loc="0" y_loc="0" z_loc="${plate_height}"/>
-        <xacro:abot_standoff_2in parent="standoff_2in_3_link" number="7" x_loc="0" y_loc="0" z_loc="${plate_height}"/>
-        <xacro:abot_standoff_2in parent="standoff_2in_4_link" number="8" x_loc="0" y_loc="0" z_loc="${plate_height}"/>
-
-        <joint name="plate_2_joint" type="fixed">
-            <origin xyz="0 0 ${plate_height}" rpy="0 0 0" />
-            <parent link="plate_1_link"/>
-            <child link="plate_2_link" />
-        </joint>
-
-        <link name="plate_2_link">
-            <inertial>
-                <mass value="0.01" />
-                <origin xyz="0 0 0" />
-                <inertia ixx="0.001" ixy="0.0" ixz="0.0"
-                         iyy="0.001" iyz="0.0" izz="0.001" />
-            </inertial>
-
-            <visual>
-                <origin xyz=" 0 0 0 " rpy="0 0 0" />
-                <geometry>
-                    <cylinder length="${base_link_length}" radius="${base_link_radius}"/>
-                </geometry>
-                <material name="yellow" />
             </visual>
 
             <collision>

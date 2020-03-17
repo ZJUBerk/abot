@@ -14,7 +14,7 @@
 	<!-- rplidar -->
 	<joint name="rplidar_joint" type="fixed">
 		<origin xyz="${rplidar_offset_x} ${rplidar_offset_y} ${rplidar_offset_z}" rpy="0 0 0" />
-		<parent link="plate_2_link"/>
+		<parent link="plate_1_link"/>
 		<child link="laser_link"/>
 	</joint>
 	<xacro:rplidar prefix="laser"/>
