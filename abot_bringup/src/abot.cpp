@@ -209,6 +209,8 @@ void ABot::writeSpeed(double RobotV, double YawRate)
 
     // 通过串口下发数据
 	boost::asio::write(sp, boost::asio::buffer(buf));
+
+    ROS_INFO("buf = %s\n",buf);
 }
 
 bool ABot::spinOnce(double RobotV, double YawRate)
