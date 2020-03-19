@@ -4,7 +4,7 @@
 	<xacro:include filename="$(find abot_description)/urdf/abot_body.urdf.xacro" />
 	<xacro:include filename="$(find abot_description)/urdf/rplidar.xacro" />
 
-	<xacro:property name="rplidar_offset_x" value="0" />
+	<xacro:property name="rplidar_offset_x" value="0.021" />
 	<xacro:property name="rplidar_offset_y" value="0" />
 	<xacro:property name="rplidar_offset_z" value="0.028" />
 

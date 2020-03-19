@@ -8,8 +8,8 @@ const unsigned char ender[2] = {0x0d, 0x0a};
 const unsigned char header[2] = {0x55, 0xaa};
 const int SPEED_INFO = 0xa55a; 
 const int GET_SPEED  = 0xaaaa;
-const double ROBOT_RADIUS = 105.00;
-const double ROBOT_LENGTH = 210.50;
+const double ROBOT_RADIUS = 78;
+const double ROBOT_LENGTH = 156;
 
 boost::asio::io_service iosev;
 boost::asio::serial_port sp(iosev, "/dev/ttyUSB0");
@@ -92,7 +92,7 @@ bool ABot::readSpeed()
 {
 	int i, length = 0;
 	unsigned char checkSum;
-    unsigned char buf[200];
+    unsigned char buf[16];
     
     // 读取串口数据
 	boost::asio::read(sp, boost::asio::buffer(buf));
@@ -100,6 +100,8 @@ bool ABot::readSpeed()
 	for (i = 0; i < 2; i++)
 		receive_header.data[i] = buf[i];
 	
+    ROS_INFO("BUF = %d, %d",buf[0],buf[1]);
+
     // 检查信息头
 	if (receive_header.data[0] != header[0] || receive_header.data[1] != header[1])
 	{
@@ -143,8 +145,8 @@ bool ABot::readSpeed()
     }
 
     // 积分计算里程计信息
-    vx_  = (vel_right.odoemtry_float + vel_left.odoemtry_float) / 2 / 1000;
-    vth_ = (vel_right.odoemtry_float - vel_left.odoemtry_float) / ROBOT_LENGTH;
+    vx_  = (vel_right.odoemtry_float + vel_left.odoemtry_float) / 2;
+    vth_ = (vel_right.odoemtry_float - vel_left.odoemtry_float) *1000 / ROBOT_LENGTH;
     
     curr_time = ros::Time::now();
 
@@ -210,7 +212,7 @@ void ABot::writeSpeed(double RobotV, double YawRate)
     // 通过串口下发数据
 	boost::asio::write(sp, boost::asio::buffer(buf));
 
-    ROS_INFO("buf = %s\n",buf);
+    //ROS_INFO("buf = %s\n",buf);
 }
 
 bool ABot::spinOnce(double RobotV, double YawRate)
@@ -220,6 +222,7 @@ bool ABot::spinOnce(double RobotV, double YawRate)
 
     // 读取机器人实际速度
     readSpeed();
+    //ROS_INFO("after read");
 
     current_time_ = ros::Time::now();
     // 发布TF
