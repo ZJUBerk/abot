@@ -1,4 +1,4 @@
-port: /dev/ttyUSB0
+port: /dev/ttyUSB1
 baud: 115200
 rate: 20
 sync_write: True
