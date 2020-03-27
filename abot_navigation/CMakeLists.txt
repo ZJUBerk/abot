@@ -59,11 +59,11 @@ find_package(catkin REQUIRED COMPONENTS
 # )
 
 ## Generate services in the 'srv' folder
-# add_service_files(
-#   FILES
-#   Service1.srv
+add_service_files(
+  FILES
+  Plan.srv
 #   Service2.srv
-# )
+)
 
 ## Generate actions in the 'action' folder
 # add_action_files(
@@ -115,7 +115,7 @@ generate_messages(
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES abot_navigation
-#  CATKIN_DEPENDS geometry_msgs move_base_msgs roscpp rospy tf visualization_msgs
+   CATKIN_DEPENDS message_runtime
 #  DEPENDS system_lib
 )
 

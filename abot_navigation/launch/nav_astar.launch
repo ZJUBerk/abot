@@ -1,0 +1,27 @@
+<launch>
+
+    <param name="use_sim_time" value="false" />
+
+    <!-- 设置地图的配置文件 -->
+    <arg name="map" default="block.yaml" />
+
+    <!-- 运行地图服务器，并且加载设置的地图-->
+    <node name="map_server" pkg="map_server" type="map_server" args="$(find abot_navigation)/maps/$(arg map)"/>
+
+    <!-- 运行planner节点 -->
+    <node pkg="abot_navigation" type="global_planner.py" name="global_planner" ns="abot"  output="screen"/>
+    <node pkg="abot_navigation" type="local_planner.py" name="local_planner" ns="abot" output="screen"/>
+
+    <!-- 启动AMCL节点 -->
+    <include file="$(find abot_navigation)/launch/amcl.launch" />
+
+    <!-- 设置一个/odom与/map之间的静态坐标变换 -->
+    <node pkg="tf" type="static_transform_publisher" name="map_odom_broadcaster" args="0 0 0 0 0 0 /map /odom 100" />
+
+    <!-- 运行rviz -->
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find abot_navigation)/rviz/nav_astar.rviz"/>
+
+    <!-- 运行global_loc 节点 -->
+    <node pkg="abot_navigation" type="global_loc" name="global_loc" output="screen"/>
+
+</launch>
