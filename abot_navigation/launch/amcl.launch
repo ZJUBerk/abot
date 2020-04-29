@@ -4,21 +4,21 @@
 
     <node pkg="amcl" type="amcl" name="amcl" clear_params="true">
         <param name="use_map_topic" value="$(arg use_map_topic)"/>
+        <!-- 当设置为true时，有另外一个节点实时的发布map话题，也就是机器人在实时的进行地图构建，并供给amcl话题使用；当设置为false时，通过map server，也就是调用已经构建完成的地图 -->
         <!-- Publish scans from best pose at a max of 10 Hz -->
         <param name="odom_model_type" value="diff"/>
-        <param name="odom_alpha5" value="0.1"/>
         <param name="gui_publish_rate" value="10.0"/>
         <param name="laser_max_beams" value="60"/>
         <param name="laser_max_range" value="12.0"/>
         <param name="min_particles" value="500"/>
         <param name="max_particles" value="2000"/>
-        <param name="kld_err" value="0.05"/>
+        <param name="kld_err" value="0.01"/>
         <param name="kld_z" value="0.99"/>
-        <param name="odom_alpha1" value="0.2"/>
-        <param name="odom_alpha2" value="0.2"/>
+        <param name="odom_alpha1" value="0.3"/>
+        <param name="odom_alpha2" value="0.3"/>
         <!-- translation std dev, m -->
-        <param name="odom_alpha3" value="0.2"/>
-        <param name="odom_alpha4" value="0.2"/>
+        <param name="odom_alpha3" value="0.3"/>
+        <param name="odom_alpha4" value="0.3"/>
         <param name="laser_z_hit" value="0.5"/>
         <param name="laser_z_short" value="0.05"/>
         <param name="laser_z_max" value="0.05"/>
@@ -28,8 +28,10 @@
         <param name="laser_model_type" value="likelihood_field"/>
         <!-- <param name="laser_model_type" value="beam"/> -->
         <param name="laser_likelihood_max_dist" value="2.0"/>
-        <param name="update_min_d" value="0.2"/>
+        <param name="update_min_d" value="0.1"/>
+        <!-- 这个值建议不大于机器人半径 -->
         <param name="update_min_a" value="0.5"/>
+        <!-- 执行滤波更新前旋转的角度，默认pi/6 rad -->
         <param name="odom_frame_id" value="odom"/>
         <param name="base_frame_id" value="base_footprint"/> 
         <param name="global_frame_id" value="map"/>

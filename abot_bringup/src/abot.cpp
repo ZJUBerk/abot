@@ -12,7 +12,7 @@ const double ROBOT_RADIUS = 78;
 const double ROBOT_LENGTH = 156;
 
 boost::asio::io_service iosev;
-boost::asio::serial_port sp(iosev, "/dev/ttyUSB1");
+boost::asio::serial_port sp(iosev, "/dev/ttyUSB0");
 
 boost::array<double, 36> odom_pose_covariance = {
     {1e-9, 0, 0, 0, 0, 0, 

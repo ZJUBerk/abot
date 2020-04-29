@@ -3,37 +3,39 @@ recovery_behavior_enabled: true
 clearing_rotation_allowed: true
 
 TrajectoryPlannerROS:
-   max_vel_x: 0.4
+   max_vel_x: 0.5
    min_vel_x: 0.05
    max_vel_y: 0.0  # zero for a differential drive robot
    min_vel_y: 0.0
    min_in_place_vel_theta: 0.5
    escape_vel: -0.1
-   acc_lim_x: 0.2
+   acc_lim_x: 0.4
    acc_lim_y: 0.0 # zero for a differential drive robot
-   acc_lim_theta: 0.5
+   acc_lim_theta: 1.25
 
    holonomic_robot: false
    yaw_goal_tolerance: 0.1 # about 6 degrees
    xy_goal_tolerance: 0.1  # 10 cm
    latch_xy_goal_tolerance: false
-   path_distance_bias: 0.6
-   goal_distance_bias: 0.8
+   path_distance_bias: 5.0 #决定控制器与规划路径的接近程度
+   goal_distance_bias: 4.0 #决定控制器与局部目标点的接近程度,同时控制速度
+   occdist_scale: 0.01
+
    meter_scoring: true
 
    heading_lookahead: 0.325
-   heading_scoring: false
-   heading_scoring_timestep: 0.8
-   occdist_scale: 0.1
-   oscillation_reset_dist: 0.05
+   heading_scoring: false #是根据机器人与路径的方向还是根据其与路径的距离打分
+   heading_scoring_timestep: 0.8 #以时间s衡量的沿轨迹的转动幅度
+  
+   oscillation_reset_dist: 0.05 #振荡标志距离
    publish_cost_grid_pc: false
    prune_plan: true
 
-   sim_time: 3.0
-   sim_granularity: 0.025
+   sim_time: 3.0 #前进模拟的时间
+   sim_granularity: 0.025 #步长大小,轨迹上采样点间的距离长度
    angular_sim_granularity: 0.025
-   vx_samples: 8
+   vx_samples: 16 #每次使用x方向速度的样点数目
    vy_samples: 0 # zero for a differential drive robot
-   vtheta_samples: 20
+   vtheta_samples: 36
    dwa: true
    simple_attractor: false
