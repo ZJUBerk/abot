@@ -34,13 +34,11 @@ int main(int argc, char** argv)
 		{
 			RobotV_ = 0;
 			YawRate_ = 0;
-            ROS_INFO("No cmd_vel received!");
+			ROS_INFO("No cmd_vel received!");
 		}
-        ros::spinOnce();
-        
+		ros::spinOnce();  
         // 机器人控制
-       	robot.spinOnce(RobotV_, YawRate_);
-        
+		robot.spinOnce(RobotV_, YawRate_);   
 		loop_rate.sleep();
 	}
 

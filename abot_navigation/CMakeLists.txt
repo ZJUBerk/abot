@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(abot_navigation)
 
+## Compile as C++11, supported in ROS Kinetic and newer
+add_compile_options(-std=c++11)
+
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
@@ -11,6 +14,8 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   tf
   visualization_msgs
+  std_msgs
+  message_generation
 )
 
 ## System dependencies are found with CMake's conventions
@@ -54,11 +59,11 @@ find_package(catkin REQUIRED COMPONENTS
 # )
 
 ## Generate services in the 'srv' folder
-# add_service_files(
-#   FILES
-#   Service1.srv
+add_service_files(
+  FILES
+  Plan.srv
 #   Service2.srv
-# )
+)
 
 ## Generate actions in the 'action' folder
 # add_action_files(
@@ -72,6 +77,11 @@ find_package(catkin REQUIRED COMPONENTS
 #   DEPENDENCIES
 #   geometry_msgs#   move_base_msgs#   visualization_msgs
 # )
+
+generate_messages(
+  DEPENDENCIES
+  std_msgs
+)
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -105,7 +115,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES abot_navigation
-#  CATKIN_DEPENDS geometry_msgs move_base_msgs roscpp rospy tf visualization_msgs
+   CATKIN_DEPENDS message_runtime
 #  DEPENDS system_lib
 )
 
@@ -141,6 +151,10 @@ include_directories(
 # target_link_libraries(abot_navigation_node
 #   ${catkin_LIBRARIES}
 # )
+
+add_executable(global_loc
+               src/global_loc.cpp)
+target_link_libraries(global_loc ${catkin_LIBRARIES})
 
 #############
 ## Install ##

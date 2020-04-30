@@ -98,7 +98,7 @@
         </link>
 
         <joint name="base_footprint_joint" type="fixed">
-            <origin xyz="0 0 ${wheel_radius*2}" rpy="0 0 0" />        
+            <origin xyz="${-motor_x} 0 ${wheel_radius*2}" rpy="0 0 0" />        
             <parent link="base_footprint"/>
             <child link="base_link" />
         </joint>
@@ -128,7 +128,7 @@
         </link>
 
         <joint name="base_left_motor_joint" type="fixed">
-            <origin xyz="${motor_x} ${motor_y} -${wheel_radius}" rpy="0 0 0" />        
+            <origin xyz="${motor_x} ${motor_y} ${-wheel_radius}" rpy="0 0 0" />        
             <parent link="base_link"/>
             <child link="left_motor" />
         </joint>
@@ -192,7 +192,7 @@
         </link>
 
         <joint name="base_right_motor_joint" type="fixed">
-            <origin xyz="${motor_x} -${motor_y} -${wheel_radius}" rpy="0 0 0" />        
+            <origin xyz="${motor_x} ${-motor_y} ${-wheel_radius}" rpy="0 0 0" />        
             <parent link="base_link"/>
             <child link="right_motor" />
         </joint>
@@ -224,7 +224,7 @@
         </link>
 
         <joint name="right_wheel_joint" type="continuous">
-            <origin xyz="0 -${(motor_length+wheel_length)/2} 0" rpy="0 0 0"/>
+            <origin xyz="0 ${-(motor_length+wheel_length)/2} 0" rpy="0 0 0"/>
             <parent link="right_motor"/>
             <child link="right_wheel_link"/>
             <axis xyz="0 1 0"/>
@@ -255,14 +255,14 @@
         </link>
 
         <joint name="front_caster_joint" type="fixed">
-            <origin xyz="${base_link_radius-wheel_radius} 0 -${wheel_radius}" rpy="0 0 0"/>
+            <origin xyz="${base_link_radius-wheel_radius} 0 ${-wheel_radius}" rpy="0 0 0"/>
             <parent link="base_link"/>
             <child link="front_caster_link"/>
         </joint>
 
-        <xacro:abot_standoff_2in parent="base_link" number="1" x_loc="-${standoff_x/2 + 0.03}" y_loc="-${standoff_y - 0.03}" z_loc="${plate_height/2}"/>
-        <xacro:abot_standoff_2in parent="base_link" number="2" x_loc="-${standoff_x/2 + 0.03}" y_loc="${standoff_y - 0.03}" z_loc="${plate_height/2}"/>
-        <xacro:abot_standoff_2in parent="base_link" number="3" x_loc="${standoff_x/2}" y_loc="-${standoff_y}" z_loc="${plate_height/2}"/>
+        <xacro:abot_standoff_2in parent="base_link" number="1" x_loc="${-standoff_x/2 - 0.03}" y_loc="${-standoff_y + 0.03}" z_loc="${plate_height/2}"/>
+        <xacro:abot_standoff_2in parent="base_link" number="2" x_loc="${-standoff_x/2 - 0.03}" y_loc="${standoff_y - 0.03}" z_loc="${plate_height/2}"/>
+        <xacro:abot_standoff_2in parent="base_link" number="3" x_loc="${standoff_x/2}" y_loc="${-standoff_y}" z_loc="${plate_height/2}"/>
         <xacro:abot_standoff_2in parent="base_link" number="4" x_loc="${standoff_x/2}" y_loc="${standoff_y}" z_loc="${plate_height/2}"/>
 
         <joint name="plate_1_joint" type="fixed">
