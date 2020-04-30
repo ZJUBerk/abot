@@ -8,11 +8,12 @@ const unsigned char ender[2] = {0x0d, 0x0a};
 const unsigned char header[2] = {0x55, 0xaa};
 const int SPEED_INFO = 0xa55a; 
 const int GET_SPEED  = 0xaaaa;
-const double ROBOT_RADIUS = 78;
-const double ROBOT_LENGTH = 156;
+const double ROBOT_RADIUS = 81.5;
+const double ROBOT_LENGTH = 163;
+const double CALI_VAL = 0.976;
 
 boost::asio::io_service iosev;
-boost::asio::serial_port sp(iosev, "/dev/ttyUSB1");
+boost::asio::serial_port sp(iosev, "/dev/ttyUSB0");
 
 boost::array<double, 36> odom_pose_covariance = {
     {1e-9, 0, 0, 0, 0, 0, 
@@ -143,7 +144,9 @@ bool ABot::readSpeed()
         vel_left.odometry_char[i]  = buf[i + 5];
         vel_right.odometry_char[i] = buf[i + 9];
     }
-
+    
+    vel_right.odoemtry_float *= CALI_VAL;
+    vel_left.odoemtry_float *= CALI_VAL;
     // 积分计算里程计信息
     vx_  = (vel_right.odoemtry_float + vel_left.odoemtry_float) / 2;
     vth_ = (vel_right.odoemtry_float - vel_left.odoemtry_float) *1000 / ROBOT_LENGTH;
@@ -158,14 +161,17 @@ bool ABot::readSpeed()
     x_ += delta_x;
     y_ += delta_y;
     th_ += delta_th;
-    last_time_ = curr_time;               
-
+    last_time_ = curr_time;             
 	return true;
 }
 
 void ABot::writeSpeed(double RobotV, double YawRate)
 {
-	unsigned char buf[16] = {0};
+	// calibration 0.976
+    RobotV /= CALI_VAL;
+    YawRate /= CALI_VAL;
+
+    unsigned char buf[16] = {0};
 	int i, length = 0;
 	double r = RobotV / YawRate;
 
