@@ -29,4 +29,6 @@
     <!-- 运行激光雷达驱动 -->
     <include file="$(find abot_bringup)/launch/rplidar.launch" />
 
+    <!-- 运行IMU -->
+    <include file="$(find lpms_imu)/launch/lpms_imu.launch" />
 </launch>
