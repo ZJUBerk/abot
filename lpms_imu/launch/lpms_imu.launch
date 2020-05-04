@@ -1,0 +1,8 @@
+<launch>
+
+  <node name="lpms_imu_node"        pkg="lpms_imu"  type="lpms_imu_node"    output="screen">
+	  <param name="port"            type="string"   value="/dev/ttyUSB2"/>
+      <param name="sensor_model"    type="string"   value="DEVICE_LPMS_RS232"/>
+  </node>
+
+</launch>
