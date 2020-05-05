@@ -103,6 +103,36 @@
             <child link="base_link" />
         </joint>
 
+        <link name="imu_link">
+            <inertial>
+                <origin xyz="0.0 0 0"/>
+                <mass value="0.1" />
+                <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+                         iyy="0.001" iyz="0.0" izz="0.001" />
+            </inertial>
+
+            <visual>
+                <origin xyz="0 0 0" rpy="$0 0 0" />
+                <geometry>
+                    <cylinder radius="0.01" length = "0.01"/>
+                </geometry>
+                <material name="gray" />
+            </visual>
+
+            <collision>
+                <origin xyz="0 0 0" rpy="$0 0 0" />
+                <geometry>
+                    <cylinder radius="$0.01" length = "$0.01"/>
+                </geometry>
+            </collision>
+        </link>
+
+        <joint name="base_imu_joint" type="fixed">
+            <origin xyz="$-0.0885 0 0.0065" rpy="0 0 0" />        
+            <parent link="base_link"/>
+            <child link="laser_link" />
+        </joint>
+
         <link name="left_motor">
             <inertial>
                 <origin xyz="0.0 0 0"/>
