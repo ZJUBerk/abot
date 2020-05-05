@@ -58,8 +58,8 @@ class LpImuProxy
         manager = LpmsSensorManagerFactory();
         imu = manager->addSensor(device_map[sensor_model], port.c_str());
 
-        imu_pub = nh.advertise<sensor_msgs::Imu>("imu",1);
-        mag_pub = nh.advertise<sensor_msgs::MagneticField>("mag",1);
+        imu_pub = nh.advertise<sensor_msgs::Imu>("imu_data",1);
+        // mag_pub = nh.advertise<sensor_msgs::MagneticField>("mag",1);
 
         TimestampSynchronizer::Options defaultSyncOptions;
         defaultSyncOptions.useMedianFilter = true;
@@ -114,22 +114,31 @@ class LpImuProxy
             imu_msg.linear_acceleration.z = -data.a[2]*9.81;
 
             // \TODO: Fill covariance matrices
-            // msg.orientation_covariance = ...
-            // msg.angular_velocity_covariance = ...
-            // msg linear_acceleration_covariance = ...
+            imu_msg.orientation_covariance = {
+                {1e6, 0, 0,
+                0, 1e6, 0,
+                0, 0, 1e-6}};
+            imu_msg.angular_velocity_covariance = {
+                {1e6, 0, 0, 
+                0, 1e6, 0, 
+                0, 0, 1e-6}};
+            imu_msg.linear_acceleration_covariance = {
+                {-1,0,0,
+                0,0,0,
+                0,0,0}};
 
             /* Fill the magnetometer message */
-            mag_msg.header.stamp = imu_msg.header.stamp;
-            mag_msg.header.frame_id = frame_id;
+            // mag_msg.header.stamp = imu_msg.header.stamp;
+            // mag_msg.header.frame_id = frame_id;
 
             // Units are microTesla in the LPMS library, Tesla in ROS.
-            mag_msg.magnetic_field.x = data.b[0]*1e-6;
-            mag_msg.magnetic_field.y = data.b[1]*1e-6;
-            mag_msg.magnetic_field.z = data.b[2]*1e-6;
+            // mag_msg.magnetic_field.x = data.b[0]*1e-6;
+            // mag_msg.magnetic_field.y = data.b[1]*1e-6;
+            // mag_msg.magnetic_field.z = data.b[2]*1e-6;
 
             // Publish the messages
             imu_pub.publish(imu_msg);
-            mag_pub.publish(mag_msg);
+            // mag_pub.publish(mag_msg);
         }
     }
 

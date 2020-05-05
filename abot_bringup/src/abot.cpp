@@ -16,19 +16,19 @@ boost::asio::io_service iosev;
 boost::asio::serial_port sp(iosev, "/dev/ttyUSB0");
 
 boost::array<double, 36> odom_pose_covariance = {
-    {1e-9, 0, 0, 0, 0, 0, 
-    0, 1e-3, 1e-9, 0, 0, 0, 
+    {1e-3, 0, 0, 0, 0, 0, 
+    0, 1e-3, 0, 0, 0, 0, 
     0, 0, 1e6, 0, 0, 0,
     0, 0, 0, 1e6, 0, 0, 
     0, 0, 0, 0, 1e6, 0, 
-    0, 0, 0, 0, 0, 1e-9}};
+    0, 0, 0, 0, 0, 1e3}};
 boost::array<double, 36> odom_twist_covariance = {
-    {1e-9, 0, 0, 0, 0, 0, 
-    0, 1e-3, 1e-9, 0, 0, 0, 
+    {1e-3, 0, 0, 0, 0, 0, 
+    0, 1e-3, 0, 0, 0, 0, 
     0, 0, 1e6, 0, 0, 0, 
     0, 0, 0, 1e6, 0, 0, 
     0, 0, 0, 0, 1e6, 0, 
-    0, 0, 0, 0, 0, 1e-9}};
+    0, 0, 0, 0, 0, 1e3}};
 
 union sendData
 {
@@ -232,19 +232,19 @@ bool ABot::spinOnce(double RobotV, double YawRate)
 
     current_time_ = ros::Time::now();
     // 发布TF
-    geometry_msgs::TransformStamped odom_trans;
-    odom_trans.header.stamp = current_time_;
-    odom_trans.header.frame_id = "odom";
-    odom_trans.child_frame_id  = "base_footprint";
+    // geometry_msgs::TransformStamped odom_trans;
+    // odom_trans.header.stamp = current_time_;
+    // odom_trans.header.frame_id = "odom";
+    // odom_trans.child_frame_id  = "base_footprint";
 
     geometry_msgs::Quaternion odom_quat;
     odom_quat = tf::createQuaternionMsgFromYaw(th_);
-    odom_trans.transform.translation.x = x_;
-    odom_trans.transform.translation.y = y_;
-    odom_trans.transform.translation.z = 0.0;
-    odom_trans.transform.rotation = odom_quat;
+    // odom_trans.transform.translation.x = x_;
+    // odom_trans.transform.translation.y = y_;
+    // odom_trans.transform.translation.z = 0.0;
+    // odom_trans.transform.rotation = odom_quat;
     
-    odom_broadcaster_.sendTransform(odom_trans);
+    // odom_broadcaster_.sendTransform(odom_trans);
 
     // 发布里程计消息
     nav_msgs::Odometry msgl;
