@@ -2,7 +2,8 @@
 
   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen" clear_params="true">
     <param name="base_global_planner" value="global_planner/GlobalPlanner"/>
-    <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS"/>
+    <!-- <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS"/> -->
+    <param name="planner_frequency" value="1.0"/>
     <param name="controller_frequency" value="5.0"/>
     <param name="recovery_behavior_enabled" value="true"/>
     <param name="clearing_rotation_allowed" value="true"/>
@@ -10,7 +11,8 @@
     <rosparam file="$(find abot_navigation)/config/abot/costmap_common_params.yaml" command="load" ns="local_costmap" />
     <rosparam file="$(find abot_navigation)/config/abot/local_costmap_params.yaml" command="load" />
     <rosparam file="$(find abot_navigation)/config/abot/global_costmap_params.yaml" command="load" />
-    <rosparam file="$(find abot_navigation)/config/abot/local_planner_params.yaml" command="load" />
+    <!-- <rosparam file="$(find abot_navigation)/config/abot/local_planner_params.yaml" command="load" /> -->
+    <rosparam file="$(find abot_navigation)/config/abot/base_local_planner_params.yaml" command="load" />
     <rosparam file="$(find abot_navigation)/config/abot/global_planner_params.yaml" command="load" />
     <remap from="/cmd_vel" to="/nav_vel"/>
   </node>
