@@ -4,7 +4,7 @@
 - differential wheeled
 - magnetic encoder (reduction ratio)30 x 13 = 390 p/r
 - rplidar A2
-- LPMS-MEE1-6 DK IMU
+- LPMS-MEE1-6 DK IMU (env: https://lp-research.com/ros-and-lp-research-imus-simple/)
 - NUCLEO F303ZE
 - raspberry pi 3B+
 
